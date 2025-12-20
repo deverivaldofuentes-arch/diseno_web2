@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- CSS (No Vite - Direct Asset) -->
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}"> <!-- CAMBIADO: custom.css -> app.css -->
     
     <!-- External Libs (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -57,6 +57,6 @@
     </footer>
 
     <!-- App Logic (No Vite - Direct Asset) -->
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script> <!-- CAMBIADO: custom.js -> app.js -->
 </body>
 </html>

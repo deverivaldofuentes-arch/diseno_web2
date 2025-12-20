@@ -1,0 +1,28 @@
+[phases.setup]
+cmds = [
+    "apt-get update && apt-get install -y libpng-dev libonig-dev libxml2-dev zip unzip curl git",
+    "composer install --optimize-autoloader", # SIN --no-scripts
+]
+
+[phases.build]
+cmds = [
+    # 1. Crear bootstrap/app.php si no existe (Laravel 11/10)
+    "if [ ! -f bootstrap/app.php ]; then cat > bootstrap/app.php << 'EOF'\n<?php\n\nuse Illuminate\\Foundation\\Application;\nuse Illuminate\\Foundation\\Configuration\\Exceptions;\nuse Illuminate\\Foundation\\Configuration\\Middleware;\n\nreturn Application::configure(basePath: dirname(__DIR__))\n    ->withRouting(\n        web: __DIR__.'/../routes/web.php',\n        api: __DIR__.'/../routes/api.php',\n        commands: __DIR__.'/../routes/console.php',\n        health: '/up',\n    )\n    ->withMiddleware(function (Middleware \\$middleware) {\n        //\n    })\n    ->withExceptions(function (Exceptions \\$exceptions) {\n        //\n    })->create();\nEOF\nfi",
+    
+    # 2. Ejecutar scripts esenciales
+    "php artisan package:discover --ansi",
+    
+    # 3. Copiar assets
+    "mkdir -p public/css public/js",
+    "cp -r resources/css/* public/css/ 2>/dev/null || true",
+    "cp -r resources/js/* public/js/ 2>/dev/null || true",
+    
+    # 4. Generar caches
+    "php artisan config:cache",
+    "php artisan route:cache", 
+    "php artisan view:cache",
+    "php artisan storage:link"
+]
+
+[start]
+cmd = "php -S 0.0.0.0:\$PORT -t public"
