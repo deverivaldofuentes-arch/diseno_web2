@@ -1,89 +1,167 @@
 @extends('layouts.app')
 
-@section('title', 'Registro')
+@section('title', 'Registrarse - NovaMarket')
 
 @section('content')
-<div class="auth-wrapper">
-    <div class="card auth-card animate-fade-in" style="max-width: 500px;">
-        <h2 style="text-align: center; margin-bottom: 2rem;">Crear Cuenta</h2>
+<div class="auth-container" style="max-width: 400px; margin: 0 auto; padding: 2rem;">
+    <div class="glass-effect" style="padding: 2rem;">
+        <h2 style="text-align: center; margin-bottom: 2rem; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <i class="fas fa-user-plus"></i> Crear Cuenta
+        </h2>
         
-        <div id="error-msg" style="display: none; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); color: #fca5a5; padding: 0.75rem; border-radius: 6px; margin-bottom: 1.5rem; font-size: 0.9rem;"></div>
-
-        <form id="register-form">
-            <div class="form-group">
-                <label class="label" for="name">Nombre Completo</label>
-                <input type="text" id="name" class="input" placeholder="Juan Pérez" required>
+        <form id="registerForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label for="name" style="font-weight: 600; color: var(--gray-light);">
+                    <i class="fas fa-user"></i> Nombre Completo
+                </label>
+                <input type="text" id="name" name="name" required minlength="3"
+                       style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); 
+                              background: rgba(255,255,255,0.05); color: var(--light); font-size: 1rem;">
+                <div class="error-message" id="nameError" style="color: #f87171; font-size: 0.875rem;"></div>
             </div>
-            <div class="form-group">
-                <label class="label" for="email">Correo Electrónico</label>
-                <input type="email" id="email" class="input" placeholder="ejemplo@correo.com" required>
+            
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label for="email" style="font-weight: 600; color: var(--gray-light);">
+                    <i class="fas fa-envelope"></i> Correo Electrónico
+                </label>
+                <input type="email" id="email" name="email" required
+                       style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); 
+                              background: rgba(255,255,255,0.05); color: var(--light); font-size: 1rem;">
+                <div class="error-message" id="emailError" style="color: #f87171; font-size: 0.875rem;"></div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="form-group">
-                    <label class="label" for="password">Contraseña</label>
-                    <input type="password" id="password" class="input" placeholder="••••••••" required>
-                </div>
-                <div class="form-group">
-                    <label class="label" for="password_confirmation">Confirmar Contraseña</label>
-                    <input type="password" id="password_confirmation" class="input" placeholder="••••••••" required>
+            
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label for="password" style="font-weight: 600; color: var(--gray-light);">
+                    <i class="fas fa-lock"></i> Contraseña
+                </label>
+                <input type="password" id="password" name="password" required minlength="8"
+                       style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); 
+                              background: rgba(255,255,255,0.05); color: var(--light); font-size: 1rem;">
+                <div class="error-message" id="passwordError" style="color: #f87171; font-size: 0.875rem;">
+                    <div style="font-size: 0.75rem; margin-top: 0.25rem; color: var(--gray);">
+                        Mínimo 8 caracteres
+                    </div>
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Registrarse</button>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label for="password_confirmation" style="font-weight: 600; color: var(--gray-light);">
+                    <i class="fas fa-lock"></i> Confirmar Contraseña
+                </label>
+                <input type="password" id="password_confirmation" name="password_confirmation" required
+                       style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); 
+                              background: rgba(255,255,255,0.05); color: var(--light); font-size: 1rem;">
+                <div class="error-message" id="password_confirmationError" style="color: #f87171; font-size: 0.875rem;"></div>
+            </div>
+            
+            <div style="display: flex; align-items: start; gap: 0.5rem;">
+                <input type="checkbox" id="terms" name="terms" required
+                       style="margin-top: 0.3rem; accent-color: var(--primary);">
+                <label for="terms" style="color: var(--gray-light); font-size: 0.875rem;">
+                    Acepto los 
+                    <a href="#" style="color: var(--primary); text-decoration: none;">Términos y Condiciones</a>
+                    y la 
+                    <a href="#" style="color: var(--primary); text-decoration: none;">Política de Privacidad</a>
+                </label>
+            </div>
+            <div class="error-message" id="termsError" style="color: #f87171; font-size: 0.875rem;"></div>
+            
+            <button type="submit" class="btn-primary" style="width: 100%;">
+                <i class="fas fa-user-plus"></i> Crear Cuenta
+            </button>
+            
+            <div style="text-align: center; color: var(--gray-light);">
+                ¿Ya tienes cuenta? 
+                <a href="{{ route('login') }}" style="color: var(--primary); text-decoration: none;">
+                    Inicia sesión aquí
+                </a>
+            </div>
         </form>
-
-        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
-            ¿Ya tienes una cuenta? <a href="/login" style="color: var(--primary);">Inicia Sesión</a>
-        </p>
+        
+        <div id="errorContainer" style="margin-top: 1rem;"></div>
     </div>
 </div>
 
 <script>
-    document.getElementById('register-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const password_confirmation = document.getElementById('password_confirmation').value;
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const button = form.querySelector('button[type="submit"]');
+    const originalText = window.showLoading(button);
+    
+    // Limpiar errores anteriores
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    document.getElementById('errorContainer').innerHTML = '';
+    
+    // Validación de contraseñas
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password_confirmation').value;
+    
+    if (password !== passwordConfirm) {
+        window.hideLoading(button, originalText);
+        document.getElementById('password_confirmationError').textContent = 'Las contraseñas no coinciden';
+        return;
+    }
+    
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        password: password,
+        password_confirmation: passwordConfirm,
+        terms: document.getElementById('terms').checked
+    };
+    
+    try {
+        const response = await axios.post('/api/register', formData);
         
-        const errorMsg = document.getElementById('error-msg');
-        const btn = e.target.querySelector('button');
-
-        errorMsg.style.display = 'none';
-        
-        if (password !== password_confirmation) {
-            errorMsg.innerText = 'Las contraseñas no coinciden';
-            errorMsg.style.display = 'block';
-            return;
+        if (response.data.access_token) {
+            // Guardar token y datos de usuario
+            localStorage.setItem('token', response.data.access_token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            
+            // Configurar headers para futuras peticiones
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+            
+            // Actualizar estado global
+            window.NovaMarket.token = response.data.access_token;
+            window.NovaMarket.user = response.data.user;
+            
+            // Mostrar mensaje de éxito
+            window.showAlert('¡Cuenta creada correctamente! Redirigiendo...', 'success');
+            
+            // Redirigir después de 1 segundo
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
         }
-
-        btn.disabled = true;
-        btn.innerHTML = 'Cargando...';
-
-        try {
-            await axios.post('/api/register', {
-                name,
-                email,
-                password,
-                password_confirmation
+    } catch (error) {
+        window.hideLoading(button, originalText);
+        
+        if (error.response?.data?.errors) {
+            // Mostrar errores de validación
+            const errors = error.response.data.errors;
+            Object.keys(errors).forEach(key => {
+                const errorEl = document.getElementById(key + 'Error');
+                if (errorEl) {
+                    errorEl.textContent = errors[key][0];
+                }
             });
-
-            // Redirect to login on success
-            // Some APIs return token on register, others require login.
-            // Safe bet: redirect to login with a message, or auto-login.
-            // Let's redirect to login for simplicity.
-            window.location.href = '/login';
-
-        } catch (error) {
-            console.error(error);
-            const msg = error.response?.data?.message || 'Error al registrarse checkea los datos.';
-            // Sometimes validation errors are in errors object
-            // if (error.response?.data?.errors) ...
-            errorMsg.innerText = msg;
-            errorMsg.style.display = 'block';
-            btn.disabled = false;
-            btn.innerHTML = 'Registrarse';
+        } else if (error.response?.data?.message) {
+            // Mostrar error general
+            document.getElementById('errorContainer').innerHTML = `
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i> ${error.response.data.message}
+                </div>
+            `;
+        } else {
+            document.getElementById('errorContainer').innerHTML = `
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i> Error al crear la cuenta
+                </div>
+            `;
         }
-    });
+    }
+});
 </script>
 @endsection

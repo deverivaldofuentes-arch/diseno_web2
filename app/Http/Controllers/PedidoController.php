@@ -13,6 +13,21 @@ use Illuminate\Support\Facades\Validator;
 
 class PedidoController extends Controller
 {
+	    /**
+     * Mostrar lista de pedidos
+     */
+    public function index()
+    {
+        return view('pedidos.index');
+    }
+
+    /**
+     * Mostrar un pedido específico
+     */
+    public function show($id)
+    {
+        return view('pedidos.show', ['id' => $id]);
+    }
     /**
      * Listar todos los pedidos del usuario logueado
      */

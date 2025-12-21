@@ -11,6 +11,21 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
+	 /**
+     * Mostrar formulario de login
+     */
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Mostrar formulario de registro
+     */
+    public function showRegisterForm()
+    {
+        return view('auth.register');
+    }
     // 🔹 Registro de usuarios
     public function register(Request $request)
     {

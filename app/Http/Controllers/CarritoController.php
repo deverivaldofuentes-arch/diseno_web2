@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Validator;
 
 class CarritoController extends Controller
 {
+	/**
+     * Mostrar carrito de compras
+     */
+    public function index()
+    {
+        return view('carrito.index');
+    }
     /**
      * Display a listing of the resource.
      */

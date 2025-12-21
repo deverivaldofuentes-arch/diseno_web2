@@ -10,6 +10,30 @@ use JWTAuth;
 
 class TiendaController extends Controller
 {
+	<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class TiendaController extends Controller
+{
+    /**
+     * Mostrar lista de tiendas
+     */
+    public function index()
+    {
+        return view('tiendas.index');
+    }
+
+    /**
+     * Mostrar una tienda específica
+     */
+    public function show($id)
+    {
+        return view('tiendas.show', ['id' => $id]);
+    }
+}
     /**
      * Display a listing of the resource.
      */

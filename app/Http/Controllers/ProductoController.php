@@ -10,6 +10,21 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
+	    /**
+     * Mostrar lista de productos
+     */
+    public function index()
+    {
+        return view('productos.index');
+    }
+
+    /**
+     * Mostrar un producto específico
+     */
+    public function show($id)
+    {
+        return view('productos.show', ['id' => $id]);
+    }
     /**
      * Display a listing of the resource.
      */

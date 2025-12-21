@@ -1,31 +1,65 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TiendaController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\ChatController;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
-Route::get('/', fn () => view('home'))->name('home');
+// Página principal
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Auth
-Route::get('/login', fn () => view('auth.login'))->name('login');
-Route::get('/register', fn () => view('auth.register'))->name('register');
+// Autenticación
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+});
 
-// Perfil
-Route::get('/perfil', fn () => view('profile.index'))->name('profile');
+// Perfil (requiere autenticación)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+});
 
 // Tiendas
-Route::get('/tiendas', fn () => view('tiendas.index'))->name('tiendas.index');
-Route::get('/tiendas/{id}', fn () => view('tiendas.show'))->name('tiendas.show');
+Route::get('/tiendas', [TiendaController::class, 'index'])->name('tiendas.index');
+Route::get('/tiendas/{id}', [TiendaController::class, 'show'])->name('tiendas.show');
 
 // Productos
-Route::get('/productos', fn () => view('productos.index'))->name('productos.index');
-Route::get('/productos/{id}', fn () => view('productos.show'))->name('productos.show');
+Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/{id}', [ProductoController::class, 'show'])->name('productos.show');
 
-// Carrito
-Route::get('/carrito', fn () => view('carrito.index'))->name('carrito');
+// Carrito (requiere autenticación)
+Route::middleware('auth')->group(function () {
+    Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
+});
 
-// Pedidos
-Route::get('/pedidos', fn () => view('pedidos.index'))->name('pedidos.index');
-Route::get('/pedidos/{id}', fn () => view('pedidos.show'))->name('pedidos.show');
+// Pedidos (requiere autenticación)
+Route::middleware('auth')->group(function () {
+    Route::get('/pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
+    Route::get('/pedidos/{id}', [PedidoController::class, 'show'])->name('pedidos.show');
+});
 
-// Chat
-Route::get('/chat', fn () => view('chat.index'))->name('chat');
+// Chat (requiere autenticación)
+Route::middleware('auth')->group(function () {
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+});
+
+// Ruta de fallback para SPA
+Route::fallback(function () {
+    return redirect('/');
+});
